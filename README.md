@@ -11,4 +11,8 @@ This projects also requests, renews and reloads Let's Encrypt certificates for t
 
 app.conf holds forwarding rules to Jitsi, etherpad, Mattermost and Owncloud.
 
-init-letsencrypt.sh should be run to set up certbot
+1. Run `$> makedir -p ./data/{certbot/web,certbot/conf,nginx}`
+2. Set the domains in `init-letsencrypt.sh` 
+3. Run `init-letsencrypt.sh` to set up certbot
+4. Run `docker-compose up -d`
+5. (optional) Run `docker-compose logs -f` to check everithing is working
