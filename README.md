@@ -1,0 +1,2 @@
+# jitsi
+Jitsi configs
