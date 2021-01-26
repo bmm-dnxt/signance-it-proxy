@@ -16,3 +16,5 @@ app.conf holds forwarding rules to Jitsi, etherpad, Mattermost and Owncloud.
 3. Run `init-letsencrypt.sh` to set up certbot
 4. Run `docker-compose up -d`
 5. (optional) Run `docker-compose logs -f` to check everithing is working
+
+Useful link: [Using Nginx as a websocket proxy](https://www.nginx.com/blog/websocket-nginx/)
