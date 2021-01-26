@@ -31,7 +31,8 @@ networks:
            external:
                    name: jitsi
    mattermost:
-           driver: bridge
+           external:
+                name: mattermost
    owncloud:
            driver: bridge
 
