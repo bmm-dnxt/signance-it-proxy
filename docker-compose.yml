@@ -17,6 +17,9 @@ services:
          - backend
          - frontend
          - proxy
+         - keycloaknet
+       extra_hosts:
+         - "keycloak:192.168.0.1"
 
    
     certbot:
@@ -37,4 +40,7 @@ networks:
            external:
                 name: almada234-api
    proxy:
-
+   
+   keycloaknet:
+           external:
+                   name: keycloaknet
