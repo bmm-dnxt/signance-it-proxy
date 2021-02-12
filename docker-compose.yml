@@ -11,12 +11,13 @@ services:
          - ./data/nginx:/etc/nginx/conf.d
          - ./data/certbot/conf:/etc/letsencrypt
          - ./data/certbot/www:/var/www/certbot
-         - /opt/it/proxy:/var/ssl:ro
+         - ./:/var/ssl:ro
        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
        networks:
-         - meet.jitsi
-         - mattermost
-         - owncloud
+         - backend
+         - frontend
+         - proxy
+
    
     certbot:
        image: certbot/certbot
@@ -25,14 +26,15 @@ services:
          - ./data/certbot/conf:/etc/letsencrypt
          - ./data/certbot/www:/var/www/certbot
        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+       networks:
+         - proxy
 
 networks:
-   meet.jitsi:
+   frontend:
            external:
-                   name: jitsi
-   mattermost:
+                   name: almada234-web
+   backend:
            external:
-                name: mattermost
-   owncloud:
-           driver: bridge
+                name: almada234-api
+   proxy:
 
