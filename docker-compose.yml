@@ -8,10 +8,10 @@ services:
          - "443:443"
        restart: unless-stopped
        volumes:
-         - ./data/nginx:/etc/nginx/conf.d
-         - ./data/certbot/conf:/etc/letsencrypt
-         - ./data/certbot/www:/var/www/certbot
-         - ./:/var/ssl:ro
+         - ./data/nginx:/etc/nginx/conf.d:ro
+         - ./data/certbot/conf:/etc/letsencrypt:ro
+         - ./data/certbot/www:/var/www/certbot:ro
+         - ./data/crypto:/var/ssl:ro
        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
        networks:
          - backend
@@ -26,8 +26,8 @@ services:
        image: certbot/certbot
        restart: unless-stopped
        volumes:
-         - ./data/certbot/conf:/etc/letsencrypt
-         - ./data/certbot/www:/var/www/certbot
+         - ./data/certbot/conf:/etc/letsencrypt:rw
+         - ./data/certbot/www:/var/www/certbot:rw
        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
        networks:
          - proxy
