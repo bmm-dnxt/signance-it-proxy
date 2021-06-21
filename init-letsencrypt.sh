@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(almada234.dnxt.space www.almada234.dnxt.space cms.almada234.dnxt.space backoffice.almada234.dnxt.space sso.almada234.dnxt.space almada234.pt www.almada234.pt cms.almada234.pt backoffice.almada234.pt sso.almada234.pt)
+domains=(almada234.pt www.almada234.pt cms.almada234.pt backoffice.almada234.pt sso.almada234.pt)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="aps@digitalnext.pt" # Adding a valid address is strongly recommended
