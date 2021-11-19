@@ -1,38 +1,39 @@
 version: '3'
 
 services:
-    nginx:
-       image: nginx:1.15-alpine
-       ports:
-         - "80:80"
-         - "443:443"
-       restart: unless-stopped
-       volumes:
-         - ./data/nginx:/etc/nginx/conf.d
-         - ./data/certbot/conf:/etc/letsencrypt
-         - ./data/certbot/www:/var/www/certbot
-         - /opt/it/proxy:/var/ssl:ro
-       command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-       networks:
-         - meet.jitsi
-         - mattermost
-         - owncloud
+  nginx:
+    image: nginx:1.21-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+      - /opt/it/proxy:/var/ssl:ro
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    networks:
+      - meet.jitsi
+      - mattermost
+      - owncloud
    
-    certbot:
-       image: certbot/certbot
-       restart: unless-stopped
-       volumes:
-         - ./data/certbot/conf:/etc/letsencrypt
-         - ./data/certbot/www:/var/www/certbot
-       entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 networks:
-   meet.jitsi:
-           external:
-                   name: jitsi
-   mattermost:
-           external:
-                name: mattermost
-   owncloud:
-           driver: bridge
+  meet.jitsi:
+    name: jitsi
+    external: true
+  mattermost:
+    name: mattermost
+    external: true
+  owncloud:
+    name: owncloud
+    external: true
 
